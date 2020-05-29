@@ -1,0 +1,17 @@
+# ignore everything but these files
+qdb/
+tmp-clearbox/
+#src/*
+#!src/*.vhd
+#!src/*.sdc
+#!src/*.tcl
+src/*/*
+!src/ip
+!src/ip/*.ip
+!src/ip/*.qsys
+output_files/*
+!output_files/*.rbf
+!output_files/*.sof
+!output_files/*.itb
+*.bak
+*.csv

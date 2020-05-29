@@ -1,0 +1,6 @@
+GHRD Versions Control =====================
+System ID in GHRD stores information related to hardware revision and feature options enabled in the design.
+The 32-bit System ID is separated into three fields in the format of 0xXYYY_ZZZZ.
+The most significant 4 bits, 0xX:Represents supported development board revision (0x0001 = PCB v1, 0x0002 = PCB v2, etc.)
+The next 12 bits, 0xYYY:GHRD release revision. Following section describes hardware modification of each revision.  0x001 = Base GHRD release:          HPS peripheral: SDMMC, EMAC1, EMAC2, USB1, I2C0, UART0, GPIO, EMIF HPS (DDR4)          FPGA peripherals: JTAG to Avalon Master Bridge, LED PIO, System ID          System ID = 0x200112FF
+The lower 16 bits, 0xZZZZ:Feature options enabled in the hardware design variants (value of 1 = enabled, 0 = disabled).  bit 0  = HPS SDMMC  bit 1  = HPS EMAC1 (RGMII with MDIO)  bit 2  = HPS EMAC2 (RGMII with MDIO)  bit 3  = HPS USB1  bit 4  = HPS I2C0  bit 5  = HPS GPIO (2x)  bit 6  = HPS DDR4 EMIF  bit 7  = HPS Early I/O Release  bit 8  = FPGA DDR4 EMIF  bit 9  = FPGA configuration file source (1 = eMMC, 0 = EPCQ)  bit 10 = FPGA to HPS Bridge  bit 11 = HPS to FPGA Bridge  bit 12 = Lightweight FPGA to HPS Bridge  bit 13 = F2SDRAM 0 port  bit 14 = F2SDRAM 1 port  bit 15 = F2SDRAM 2 port
