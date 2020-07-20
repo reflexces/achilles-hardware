@@ -250,7 +250,6 @@ architecture rtl of achilles_ghrd is
    -- Debug
    signal s_led_usr_r_n                                : std_logic;
    signal s_source                                     : std_logic_vector(127 downto 0);
-   signal led_counter                                  : std_logic_vector(25 downto 0);    -- DNE: used for design update for rocketboards.org example
 	
 begin
 
@@ -352,36 +351,18 @@ begin
          tick        => s_tick_8hz,        -- out std_logic              -- '1' for one cycle
          tick_toggle => open               -- out std_logic              -- inverted each time
       );
+
+-- ============================================================================================================================
+--  Blink LED
+-- ============================================================================================================================
+   i_blink_led : entity work.blink_led
+      port map (
+	      clk           => s_sys_clk,
+		   rst           => s_sys_rst,
+		   blink_led_out => led_usr_r_n
+	   );
+		
 end block blk_clk_n_rst;
-
--- ############################################################################################################################
---  LED
--- ############################################################################################################################
-blk_led : block is
-begin
---    led_usr_g_n <= '0'       when s_fpga_ddr4_tg_status_traffic_gen_pass='1'    else
---                   s_tick_1s when s_fpga_ddr4_status_local_cal_success='1' else 
---                   '1';
-
--- DNE 2/20/20: update for rocketboards.org example
--- create a blinking red LED so we have a visual indicator of FPGA configuration (CONF_DONE is not used or routed to LED)
--- useful to verify successful configuration of the FPGA from Linux
--- blinks every 0.67 seconds
-
- process (s_sys_rst, s_sys_clk)
- begin
-   if s_sys_rst='1' then
-      led_counter <= (others=>'1');
-   elsif rising_edge(s_sys_clk) then
-      led_counter <= led_counter + '1';
-   end if;
-end process;
-
-led_usr_r_n <= led_counter(25);
-
--- end DNE update
-
-end block blk_led;
 
 -- remove FPGA DDR4 due to Quartus Prime Pro v20.1 fitter error
 -- ############################################################################################################################
