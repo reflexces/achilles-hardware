@@ -96,6 +96,7 @@ set_global_assignment -name VHDL_FILE src/achilles_ghrd.vhd
 set_global_assignment -name VHDL_FILE src/delayed_rst.vhd
 set_global_assignment -name VHDL_FILE src/sync_rst.vhd
 set_global_assignment -name VHDL_FILE src/tick_gen.vhd
+set_global_assignment -name VHDL_FILE src/blink_led.vhd
 set_global_assignment -name QSYS_FILE src/ip/achilles_hps.qsys
 set_global_assignment -name QSYS_FILE src/ip/jtag_src_prb.qsys
 set_global_assignment -name IP_FILE src/ip/hps_system_id.ip
