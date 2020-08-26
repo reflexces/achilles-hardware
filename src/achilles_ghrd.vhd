@@ -27,6 +27,7 @@ library pll_sys;
 library achilles_hps;
 library uart;
 library jtag_src_prb;
+library blink_led;
 
 entity achilles_ghrd is port (
    clk_25mhz_fpga                    : in    std_logic;
@@ -257,12 +258,12 @@ begin
 -- System PLL, LVDS PLL and reset
 --############################################################################################################################
 blk_clk_n_rst : block is
-    constant C_RST_DELAY_NB_BITS    : integer   := 3;
+   constant C_RST_DELAY_NB_BITS    : integer   := 3;
 
-    signal sb_pll_locked            : std_logic;
-    signal sb_rst                   : std_logic := '1';
-    signal sb_rst_dly               : std_logic;
-    signal sb_rst_n                 : std_logic;
+   signal sb_pll_locked            : std_logic;
+   signal sb_rst                   : std_logic := '1';
+   signal sb_rst_dly               : std_logic;
+   signal sb_rst_n                 : std_logic;
 begin
  -- ============================================================================================================================
  --  PLL reset
@@ -279,11 +280,11 @@ begin
 --   c0 : 100.0MHz (must be consistent with C_SYS_CLK_PERIOD)
 -- ============================================================================================================================
    i_pll_sys : entity pll_sys.pll_sys
-   port map (
-      locked   => sb_pll_locked,     -- out std_logic        -- locked.export
-      outclk_0 => s_sys_clk,         -- out std_logic        -- outclk0.clk
-      refclk   => clk_25mhz_fpga,    -- in  std_logic := '0' -- refclk.clk
-      rst      => sb_rst             -- in  std_logic := '0' -- reset.reset
+      port map (
+         locked   => sb_pll_locked,     -- out std_logic        -- locked.export
+         outclk_0 => s_sys_clk,         -- out std_logic        -- outclk0.clk
+         refclk   => clk_25mhz_fpga,    -- in  std_logic := '0' -- refclk.clk
+         rst      => sb_rst             -- in  std_logic := '0' -- reset.reset
    );
 	
 -- ============================================================================================================================
@@ -291,17 +292,17 @@ begin
 -- ============================================================================================================================
 --   process (sb_pll_locked, clk_25mhz_fpga)
 --   begin
---     if sb_pll_locked='0' then
---        sb_rst_n <= '0';
---     elsif rising_edge(clk_25mhz_fpga) then
---        if s_fpga_ddr4_status_local_cal_success='0' and s_tick_1s='1'
---           then sb_rst_n <= '0';
---        elsif s_fpga_ddr4_status_local_cal_fail='1'
---           then sb_rst_n <= '0';
---        else
---           sb_rst_n <= '1';
---        end if;
---     end if;
+--      if sb_pll_locked='0' then
+--         sb_rst_n <= '0';
+--      elsif rising_edge(clk_25mhz_fpga) then
+--         if s_fpga_ddr4_status_local_cal_success='0' and s_tick_1s='1'
+--            then sb_rst_n <= '0';
+--         elsif s_fpga_ddr4_status_local_cal_fail='1'
+--            then sb_rst_n <= '0';
+--         else
+--            sb_rst_n <= '1';
+--         end if;
+--      end if;
 --   end process;
 
 -- ============================================================================================================================
@@ -357,10 +358,10 @@ begin
 -- ============================================================================================================================
    i_blink_led : entity work.blink_led
       port map (
-	      clk           => s_sys_clk,
-		   rst           => s_sys_rst,
-		   blink_led_out => led_usr_r_n
-	   );
+	     clk           => s_sys_clk,
+		 rst           => s_sys_rst,
+		 blink_led_out => led_usr_r_n
+      );
 		
 end block blk_clk_n_rst;
 
