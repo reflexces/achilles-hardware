@@ -92,6 +92,7 @@ set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 
 # Ordering Sensitive Assignments
 # ==============================
+set_global_assignment -name SDC_FILE src/achilles_ghrd.sdc
 set_global_assignment -name VHDL_FILE src/achilles_ghrd.vhd
 set_global_assignment -name VHDL_FILE src/delayed_rst.vhd
 set_global_assignment -name VHDL_FILE src/sync_rst.vhd
@@ -112,4 +113,19 @@ set_global_assignment -name QSYS_FILE src/ip/uart.qsys
 set_global_assignment -name IP_FILE src/ip/uart_rs232_0.ip
 set_global_assignment -name IP_FILE src/ip/uart_master_0.ip
 set_global_assignment -name IP_FILE src/ip/uart_clk_0.ip
-set_global_assignment -name SDC_FILE src/achilles_ghrd.sdc
+set_global_assignment -name IP_FILE src/ip/pr_region_controller.ip
+set_instance_assignment -name PARTITION pr_partition -to i_blink_led -entity achilles_ghrd
+set_instance_assignment -name PARTITION_COLOUR 4294940037 -to i_blink_led -entity achilles_ghrd
+set_instance_assignment -name PARTIAL_RECONFIGURATION_PARTITION ON -to i_blink_led -entity achilles_ghrd
+set_instance_assignment -name EXPORT_PARTITION_SNAPSHOT_FINAL achilles_ghrd_static.qdb -to | -entity achilles_ghrd
+set_instance_assignment -name PLACE_REGION "X4 Y2 X23 Y21" -to i_blink_led
+set_instance_assignment -name RESERVE_PLACE_REGION ON -to i_blink_led
+set_instance_assignment -name CORE_ONLY_PLACE_REGION ON -to i_blink_led
+set_instance_assignment -name REGION_NAME i_blink_led -to i_blink_led
+set_instance_assignment -name ROUTE_REGION "X3 Y1 X24 Y22" -to i_blink_led
+set_instance_assignment -name RESERVE_ROUTE_REGION OFF -to i_blink_led
+set_instance_assignment -name PARTITION_COLOUR 4287731711 -to achilles_ghrd -entity achilles_ghrd
+set_instance_assignment -name PARTITION_COLOUR 4289944831 -to auto_fab_0 -entity achilles_ghrd
+set_global_assignment -name REVISION_TYPE PR_BASE
+set_global_assignment -name GENERATE_PR_RBF_FILE ON
+set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF

@@ -17,6 +17,9 @@
 ----------------------------------------------------------------------------------------------------
 -- Quartus Version      Date            Author               Description
 -- 20.1                 05/20/2020      DNE                  Initial release
+-- 20.1                 08/28/2020      DNE                  updates to support Partial Reconfig
+--                                                           using blink_led module as example PR
+--                                                           region
 ----------------------------------------------------------------------------------------------------
 library ieee;
 use     ieee.std_logic_1164.all;
@@ -27,7 +30,7 @@ library pll_sys;
 library achilles_hps;
 library uart;
 library jtag_src_prb;
-library blink_led;
+--library blink_led;
 
 entity achilles_ghrd is port (
    clk_25mhz_fpga                    : in    std_logic;
@@ -249,9 +252,25 @@ architecture rtl of achilles_ghrd is
    signal s_stat_writing                               : std_logic;
 
    -- Debug
-   signal s_led_usr_r_n                                : std_logic;
    signal s_source                                     : std_logic_vector(127 downto 0);
-	
+
+   -- LED
+   signal s_led_usr_r_n                                : std_logic;
+
+   -- PR Controller
+   signal pr_handshake_start_req                       : std_logic;
+   signal pr_handshake_stop_req                        : std_logic;
+   signal pr_reset                                     : std_logic;
+   signal pr_freeze                                    : std_logic;
+
+component blink_led
+   port (
+      clk            : in std_logic;
+      rst            : in std_logic;
+      blink_led_out  : out std_logic
+   );
+end component;
+
 begin
 
 --############################################################################################################################
@@ -353,16 +372,6 @@ begin
          tick_toggle => open               -- out std_logic              -- inverted each time
       );
 
--- ============================================================================================================================
---  Blink LED
--- ============================================================================================================================
-   i_blink_led : entity work.blink_led
-      port map (
-	     clk           => s_sys_clk,
-		 rst           => s_sys_rst,
-		 blink_led_out => led_usr_r_n
-      );
-		
 end block blk_clk_n_rst;
 
 -- remove FPGA DDR4 due to Quartus Prime Pro v20.1 fitter error
@@ -551,6 +560,15 @@ begin
          hps_ddr4_mem_conduit_end_mem_dq                        => hps_ddr4_dq,                               --                                               .mem_dq
          hps_ddr4_mem_conduit_end_mem_dbi_n                     => hps_ddr4_dbi_n,                            --                                               .mem_dbi_n
 
+         hps_pr_region_controller_pr_handshake_start_req         => pr_handshake_start_req,                   --          hps_pr_region_controller_pr_handshake.start_req
+         hps_pr_region_controller_pr_handshake_start_ack         => pr_handshake_start_req,                   --                                               .start_ack
+         hps_pr_region_controller_pr_handshake_stop_req          => pr_handshake_stop_req,                    --                                               .stop_req
+         hps_pr_region_controller_pr_handshake_stop_ack          => pr_handshake_stop_req,                    --                                               .stop_ack
+         hps_pr_region_controller_reset_source_reset             => pr_reset,                                 --          hps_pr_region_controller_reset_source.reset
+         hps_pr_region_controller_bridge_freeze0_freeze          => open,                                     --        hps_pr_region_controller_bridge_freeze0.freeze
+         hps_pr_region_controller_bridge_freeze0_illegal_request => '0',                                      --                                               .illegal_request
+         hps_pr_region_controller_pr_region_freeze0_freeze       => pr_freeze,                                --     hps_pr_region_controller_pr_region_freeze0.freeze
+
          pio_led_export                                         => led_usr_g_n                                --                                               .pio_led.export
    );
 
@@ -559,8 +577,8 @@ end block blk_hps;
 -- ############################################################################################################################
 --  UART FPGA <-> MAX10
 -- ############################################################################################################################
-blk_UART_FPGA2MAX10 : block is
-begin
+--blk_UART_FPGA2MAX10 : block is
+--begin
 
    i_uart : entity uart.uart
    port map (
@@ -571,16 +589,31 @@ begin
       rs232_0_interrupt_irq          => open           -- out std_logic         --          rs232_0_interrupt.irq
    );
 	
-end block blk_UART_FPGA2MAX10;
+--end block blk_UART_FPGA2MAX10;
+
+-- ############################################################################################################################
+--  Blink LED
+-- ############################################################################################################################
+
+   i_blink_led : blink_led
+   port map (
+      clk           => s_sys_clk,
+      rst           => (s_sys_rst or pr_reset),
+      blink_led_out => s_led_usr_r_n
+   );
+   
+   -- turn off LED during PR update
+   led_usr_r_n <= '1' when pr_freeze = '1' else s_led_usr_r_n;
 
 -- ############################################################################################################################
 --  Source and Probe as there is no switch on this board.
 -- ############################################################################################################################
-i_jtag_src_prb : entity jtag_src_prb.jtag_src_prb
-port map (
-   probe      => (others => '0'), -- in  std_logic_vector(127 downto 0) := (others => '0') -- probes.probe
-   source_clk => s_sys_clk,       -- in  std_logic                      := '0'             -- source_clk.clk
-   source     => s_source         -- out std_logic_vector(127 downto 0)                    -- sources.source
-);
+
+   i_jtag_src_prb : entity jtag_src_prb.jtag_src_prb
+   port map (
+      probe      => (others => '0'), -- in  std_logic_vector(127 downto 0) := (others => '0') -- probes.probe
+      source_clk => s_sys_clk,       -- in  std_logic                      := '0'             -- source_clk.clk
+      source     => s_source         -- out std_logic_vector(127 downto 0)                    -- sources.source
+   );
 
 end architecture rtl;

@@ -19,13 +19,16 @@
 #
 # Quartus Prime
 # Version 20.1.0 Build 177 04/06/2020 SC Pro Edition
-# Date created = 14:28:49  May 14, 2020
+# Date created = 11:07:19  September 04, 2020
 #
 # -------------------------------------------------------------------------- #
 
 QUARTUS_VERSION = "20.1"
-DATE = "14:28:49  May 14, 2020"
+DATE = "11:07:19  September 04, 2020"
 
 # Revisions
 
 PROJECT_REVISION = "achilles_ghrd"
+PROJECT_REVISION = "blink_led_slow"
+PROJECT_REVISION = "blink_led_fast"
+PROJECT_REVISION = "blink_led_default"

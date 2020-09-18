@@ -14,14 +14,14 @@ entity blink_led is
       clk            : in std_logic;
       rst            : in std_logic;
 		
-		blink_led_out  : out std_logic
-	);
+      blink_led_out  : out std_logic
+   );
 end entity blink_led;
 
 architecture rtl of blink_led is
 
 signal led_counter   : std_logic_vector(26 downto 0);
-	 
+
 begin
 
 process (clk, rst)
