@@ -13,6 +13,7 @@ post_message -type info "# Setting SDC constraints of RxC modules..."
 set_time_format -unit ns -decimal_places 3
 
 create_clock -name {clk_25mhz_fpga}         -period  25.000MHz    [get_ports {clk_25mhz_fpga}]
+create_clock -name {altera_reserved_tck}    -period  33.000MHz    [get_ports {altera_reserved_tck}]
 # create_clock -name {clk_a10_0}              -period 100.000MHz    [get_ports {clk_a10_0}]
 # create_clock -name {clk_a10_1}              -period 100.000MHz    [get_ports {clk_a10_1}]
 #create_clock -name {clk_xcvr_1}             -period 156.250MHz    [get_ports {clk_xcvr[1]}]
@@ -47,6 +48,7 @@ derive_clock_uncertainty
 # ############################################################################################################################
 set_clock_groups \
     -group {clk_25mhz_fpga} \
+	-group {altera_reserved_tck} \
     -group *i_pll_sys|iopll_0|outclk0 \
     -group {clk_xcvr_1} \
     -group {clk_xcvr_2} \
