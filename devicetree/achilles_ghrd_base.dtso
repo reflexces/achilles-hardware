@@ -1,0 +1,29 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	fragment@0 {
+
+		target-path = "/soc/base_fpga_region";
+		#address-cells = <0x1>;
+		#size-cells = <0x1>;
+
+		__overlay__ {
+			ranges = <0x00000000 0x00000000 0xc0000000 0x3C000000>,
+			         <0x00000001 0x00000000 0xff200000 0x00200000>;
+			external-fpga-config;
+			#address-cells = <0x2>;
+			#size-cells = <0x1>;
+			fpga_pr_region0 {
+				compatible = "fpga-region";
+				fpga-bridges = <&freeze_controller_0>;
+				ranges;
+            };
+
+			freeze_controller_0: freeze_controller@100001000 {
+				compatible = "altr,freeze_controller-16.1", "altr,freeze-bridge-controller";
+				reg = <0x1 0x1000 0x10>;
+            };
+        };
+    };
+};
