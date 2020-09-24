@@ -3220,7 +3220,7 @@
                         </entry>
                         <entry>
                             <key>sysid_id_value</key>
-                            <value>0x200112ff</value>
+                            <value>0x200212ff</value>
                         </entry>
                     </cmsisVars>
                 </cmsisInfo>
@@ -3362,16 +3362,20 @@
             <assignments>
                 <assignmentValueMap>
                     <entry>
+                        <key>embeddedsw.configuration.isFlash</key>
+                        <value>0</value>
+                    </entry>
+                    <entry>
                         <key>embeddedsw.configuration.isMemoryDevice</key>
-                        <value>false</value>
+                        <value>0</value>
                     </entry>
                     <entry>
                         <key>embeddedsw.configuration.isNonVolatileStorage</key>
-                        <value>false</value>
+                        <value>0</value>
                     </entry>
                     <entry>
                         <key>embeddedsw.configuration.isPrintableDevice</key>
-                        <value>false</value>
+                        <value>0</value>
                     </entry>
                 </assignmentValueMap>
             </assignments>
@@ -3411,6 +3415,7 @@
                     </entry>
                     <entry>
                         <key>bridgedAddressOffset</key>
+                        <value>0</value>
                     </entry>
                     <entry>
                         <key>bridgesToMaster</key>
@@ -3599,7 +3604,7 @@
                     </entry>
                     <entry>
                         <key>sysid_id_value</key>
-                        <value>0x200112ff</value>
+                        <value>0x200212ff</value>
                     </entry>
                 </cmsisVars>
             </cmsisInfo>
@@ -3641,7 +3646,7 @@
     <assignmentValueMap>
         <entry>
             <key>embeddedsw.CMacro.ID</key>
-            <value>536941311</value>
+            <value>537006847</value>
         </entry>
         <entry>
             <key>embeddedsw.CMacro.TIMESTAMP</key>
@@ -3661,7 +3666,7 @@
         </entry>
         <entry>
             <key>embeddedsw.dts.params.id</key>
-            <value>536941311</value>
+            <value>537006847</value>
         </entry>
         <entry>
             <key>embeddedsw.dts.params.timestamp</key>
