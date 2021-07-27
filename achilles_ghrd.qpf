@@ -28,6 +28,7 @@ DATE = "18:09:32  September 23, 2020"
 
 # Revisions
 
+PROJECT_REVISION = "achilles_ghrd"
 PROJECT_REVISION = "blink_led_slow"
 PROJECT_REVISION = "blink_led_fast"
 PROJECT_REVISION = "blink_led_default"
