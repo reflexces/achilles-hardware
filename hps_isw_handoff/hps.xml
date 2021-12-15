@@ -2,7 +2,7 @@
   <system>
     <config name='VERSION' value='19.1' />
     <config name='DEVICE_FAMILY' value='Arria 10' />
-    <config name='TIME_AND_DATE' value='Tuesday July, 27, 2021 - 04:44:37 PM EDT' />
+    <config name='TIME_AND_DATE' value='Wednesday December, 15, 2021 - 08:10:39 AM EST' />
     <config name='DMA_Enable' value='No No No No No No No No' />
     <config name='eosc1_clk_hz' value='25000000.0' />
     <config name='emac0_clk_hz' value='250000000' />
@@ -202,8 +202,8 @@
     <config name='i_clk_mgr_perpllgrp.cntr9clk.cnt' value='900' />
   </csr>
   <csr />
-  <!-- This section was added by Quartus Prime Version 21.1.0 Build 169 03/24/2021 SC Pro Edition -->
-  <!-- Generated on Tue Jul 27 17:01:59 2021 -->
+  <!-- This section was added by Quartus Prime Version 21.3.0 Build 170 09/23/2021 SC Pro Edition -->
+  <!-- Generated on Wed Dec 15 08:28:22 2021 -->
   <csr>
     <!-- OSC_CLK_1_HPS -->
     <config name='i_io48_pin_mux_dedicated_io_grp.configuration_dedicated_io_1.rtrim'        value='1' />

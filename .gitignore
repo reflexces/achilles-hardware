@@ -14,3 +14,5 @@ output_files/*
 *.qdb
 *.qws
 *_description.txt
+*.rpt
+*.BAK.qsys

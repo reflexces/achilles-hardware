@@ -25,7 +25,7 @@
 
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "17:53:42  SEPTEMBER 02, 2020"
-set_global_assignment -name LAST_QUARTUS_VERSION "21.1.0 Pro Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "21.3.0 Pro Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name FLOW_ENABLE_INTERACTIVE_TIMING_ANALYZER OFF
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
@@ -70,6 +70,9 @@ set_instance_assignment -name PARTITION_COLOUR 4287731711 -to achilles_ghrd -ent
 set_instance_assignment -name PARTITION_COLOUR 4289944831 -to auto_fab_0 -entity achilles_ghrd
 set_instance_assignment -name ENTITY_REBINDING blink_led_slow -to i_blink_led -entity achilles_ghrd
 set_global_assignment -name REVISION_TYPE PR_IMPL
+set_instance_assignment -name QDB_FILE_PARTITION achilles_ghrd_static.qdb -to | -entity achilles_ghrd
+set_global_assignment -name GENERATE_PR_RBF_FILE ON
+set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
 set_global_assignment -name SDC_FILE src/achilles_ghrd.sdc
 set_global_assignment -name VHDL_FILE src/achilles_ghrd.vhd
 set_global_assignment -name VHDL_FILE src/delayed_rst.vhd
@@ -92,6 +95,3 @@ set_global_assignment -name IP_FILE src/ip/uart_rs232_0.ip
 set_global_assignment -name IP_FILE src/ip/uart_master_0.ip
 set_global_assignment -name IP_FILE src/ip/uart_clk_0.ip
 set_global_assignment -name IP_FILE src/ip/pr_region_controller.ip
-set_instance_assignment -name QDB_FILE_PARTITION achilles_ghrd_static.qdb -to | -entity achilles_ghrd
-set_global_assignment -name GENERATE_PR_RBF_FILE ON
-set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
