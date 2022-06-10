@@ -1,0 +1,13 @@
+/dts-v1/;
+/plugin/;
+
+&{/soc/base_fpga_region/fpga_pr_region0} {
+
+	#address-cells = <0x2>;
+	#size-cells = <0x1>;
+
+	partial-fpga-config;
+	firmware-name = "blink_led_default.pr_partition.rbf";
+	region-unfreeze-timeout-us = <0x4>;
+	region-freeze-timeout-us = <0x4>;
+};
