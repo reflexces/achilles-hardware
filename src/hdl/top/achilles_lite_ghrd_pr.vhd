@@ -398,7 +398,8 @@ begin
             sys_pll_reset_reset                                    => sb_rst,                                           --                    sys_pll_reset.reset
             sys_pll_ref_clk_clk                                    => clk_25mhz_fpga,                                   --                  sys_clk_ref_clk.clk
             sys_pll_locked_export                                  => sb_pll_locked,                                    --                   sys_pll_locked.export
-                                                                   
+            sys_pll_outclk1_clk                                    => s_sys_clk,                                        --                  sys_pll_outclk1.clk
+
             hps_sys_rst_n_reset_n                                  => s_sys_rst_n,                                      --                    hps_sys_rst_n.reset_n
             hps_f2h_cold_reset_req_reset_n                         => not(hps_rst),                                     --           hps_f2h_cold_reset_req.reset_n
             hps_f2h_warm_reset_req_reset_n                         => not(hps_rst),                                     --           hps_f2h_warm_reset_req.reset_n

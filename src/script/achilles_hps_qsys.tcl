@@ -12,6 +12,7 @@ proc add_achilles_hps_qsys_components {som_ver ghrd_type} {
 #   set_instance_parameter_value sys_clk {resetSynchronousEdges} {DEASSERT}
 
    add_instance sys_pll altera_iopll
+   set_instance_parameter_value sys_pll {gui_number_of_clocks} {2}
    set_instance_parameter_value sys_pll {gui_reference_clock_frequency} {25.0}
    set_instance_parameter_value sys_pll {gui_reference_clock_frequency_ps} {40000.0}
    set_instance_parameter_value sys_pll {gui_use_locked} {1}
@@ -19,6 +20,7 @@ proc add_achilles_hps_qsys_components {som_ver ghrd_type} {
    set_interface_property sys_pll_reset EXPORT_OF sys_pll.reset
    set_interface_property sys_pll_ref_clk EXPORT_OF sys_pll.refclk
    set_interface_property sys_pll_locked EXPORT_OF sys_pll.locked
+   set_interface_property sys_pll_outclk1 EXPORT_OF sys_pll.outclk1
    
    add_instance h2f_lw_clk clock_source
    set_instance_parameter_value h2f_lw_clk {clockFrequency} {100000000.0}
