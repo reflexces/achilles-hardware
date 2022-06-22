@@ -62,7 +62,7 @@ post_message "Starting Quartus compilation of revision achilles_ghrd ..."
 post_message "--------------------------------------------------------------------------------"
 
 #exec -ignorestderr $quartus(quartus_rootpath)/bin/quartus_sh --flow compile achilles_ghrd -c achilles_ghrd
-exec $quartus(quartus_rootpath)/bin/quartus_sh --flow compile achilles_ghrd -c achilles_ghrd
+exec $quartus(binpath)/quartus_sh --flow compile achilles_ghrd -c achilles_ghrd
 
 if {$ghrd_type == "pr"} {
    post_message "--------------------------------------------------------------------------------"
@@ -82,9 +82,9 @@ if {$ghrd_type == "pr"} {
 #   exec -ignorestderr $quartus(quartus_rootpath)/bin/quartus_sh --flow compile achilles_ghrd -c blink_led_fast
 #   exec -ignorestderr $quartus(quartus_rootpath)/bin/quartus_sh --flow compile achilles_ghrd -c blink_led_slow
    
-   exec $quartus(quartus_rootpath)/bin/quartus_sh --flow compile achilles_ghrd -c blink_led_default
-   exec $quartus(quartus_rootpath)/bin/quartus_sh --flow compile achilles_ghrd -c blink_led_fast
-   exec $quartus(quartus_rootpath)/bin/quartus_sh --flow compile achilles_ghrd -c blink_led_slow
+   exec $quartus(binpath)/quartus_sh --flow compile achilles_ghrd -c blink_led_default
+   exec $quartus(binpath)/quartus_sh --flow compile achilles_ghrd -c blink_led_fast
+   exec $quartus(binpath)/quartus_sh --flow compile achilles_ghrd -c blink_led_slow
 }
 
 post_message "--------------------------------------------------------------------------------"
@@ -92,7 +92,7 @@ post_message "Generating periphery and core RBF programming files ..."
 post_message "--------------------------------------------------------------------------------"
 
 #exec -ignorestderr $quartus(quartus_rootpath)/bin/quartus_cpf --convert --hps -o bitstream_compression=on achilles_ghrd.sof achilles_${som_ver}_ghrd.rbf
-exec -ignorestderr $quartus(quartus_rootpath)/bin/quartus_cpf --convert --hps -o \
+exec -ignorestderr $quartus(binpath)/quartus_cpf --convert --hps -o \
    bitstream_compression=on output_files/achilles_ghrd.sof output_files/achilles_${som_ver}_ghrd.rbf
 
 #puts  "Total GHRD generation time [format "%d:%02d" $hours $minutes] ($secs seconds)"
