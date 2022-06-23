@@ -1,15 +1,13 @@
+# Generate HPS component and peripherals
+# sourced from achilles_qsys_script_GENERATED.tcl
+# process add_achilles_hps_qsys_components called from achilles_qsys_script_GENERATED.tcl
+# expected process parameters:
+#   som_ver = turbo, indus, lite
+#   ghrd_type = pr, std
+
 proc add_achilles_hps_qsys_components {som_ver ghrd_type} {
 
    # system clock and reset
-
-#   add_instance sys_clk clock_source
-#   add_interface sys_clk clock sink
-#   set_interface_property sys_clk EXPORT_OF sys_clk.clk_in
-#   add_interface sys_rstn reset sink
-#   set_interface_property sys_rstn EXPORT_OF sys_clk.clk_in_reset
-#   set_instance_parameter_value sys_clk {clockFrequency} {100000000.0}
-#   set_instance_parameter_value sys_clk {clockFrequencyKnown} {1}
-#   set_instance_parameter_value sys_clk {resetSynchronousEdges} {DEASSERT}
 
    add_instance sys_pll altera_iopll
    set_instance_parameter_value sys_pll {gui_number_of_clocks} {2}
@@ -30,7 +28,6 @@ proc add_achilles_hps_qsys_components {som_ver ghrd_type} {
    add_interface hps_sys_rst_n reset sink
    set_interface_property hps_sys_rst_n EXPORT_OF h2f_lw_clk.clk_in_reset
    add_connection sys_pll.outclk0 h2f_lw_clk.clk_in
-#   add_connection h2f_lw_clk.clk_reset sys_pll.reset
 
    # HPS and peripherals
 

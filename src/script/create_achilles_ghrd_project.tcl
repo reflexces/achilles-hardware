@@ -1,13 +1,7 @@
-#package require qsys
-#load_package flow
+# processes to create Quartus project, create PR revisions, and generate the script achilles_qsys_script_GENERATED.tcl
+# sourced from achilles_ghrd_build_flow.tcl
 
-# Init global variables
-#set som_ver [lindex $argv 0]
-#set ghrd_type [lindex $argv 1]
-#set project_name achilles_${som_ver}_ghrd
 set family "Arria 10"
-#set som_ver turbo
-#set ghrd_type pr
 
 post_message "Achilles SOM version = $som_ver"
 post_message "Achilles GHRD Type = $ghrd_type"
@@ -19,22 +13,17 @@ if {$som_ver == "lite"} {
   set device 10AS066H2F34I1HG
 }
 
-# BACKUP OF ORIGINAL create_quartus_project proc
 proc create_quartus_project {project_name revision_name} {
 
-#   global project_name
-#   global revision_name
    global family
    global device
    global som_ver
    global ghrd_type
    
-   # project
-   #project_new $project_name -overwrite
    project_new -revision $revision_name $project_name -overwrite
    
    # project assignments
-   
+
    set_global_assignment -name FAMILY $family
    set_global_assignment -name DEVICE $device
    set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
@@ -42,20 +31,13 @@ proc create_quartus_project {project_name revision_name} {
    
    # default assignments
 
-# TODO: Fix this QIP file naming issue.  Quartus issues error due to .qip and .qsys files
-# with same name.  Commenting out QIP from .qsf file resolves it.  QIP_FILE assignment
-# is added automatically if omitted here.
-#   set_global_assignment -name QIP_FILE achilles_${som_ver}_hps/achilles_${som_ver}_hps.qip
    set_global_assignment -name QSYS_FILE achilles_hps.qsys
-#   set_global_assignment -name QIP_FILE achilles_hps/achilles_hps.qip
    set_global_assignment -name VHDL_FILE src/hdl/achilles_ghrd.vhd
    set_global_assignment -name VHDL_FILE src/hdl/delayed_rst.vhd
    set_global_assignment -name VHDL_FILE src/hdl/sync_rst.vhd
    set_global_assignment -name VHDL_FILE src/hdl/tick_gen.vhd
    set_global_assignment -name VHDL_FILE src/hdl/blink_led_default.vhd
    set_global_assignment -name SDC_FILE src/script/achilles_ghrd.sdc
-#   set_global_assignment -name TCL_SCRIPT_FILE src/script/achilles_${som_ver}_io_pinout.tcl
-#   set_global_assignment -name TOP_LEVEL_ENTITY achilles_ghrd
    set_global_assignment -name ENABLE_HPS_INTERNAL_TIMING ON
    
    # globals
@@ -89,7 +71,6 @@ proc create_quartus_project {project_name revision_name} {
       set_instance_assignment -name PARTITION_COLOUR 4294940037 -to i_blink_led -entity achilles_ghrd
       set_instance_assignment -name PARTIAL_RECONFIGURATION_PARTITION ON -to i_blink_led -entity achilles_ghrd
       set_instance_assignment -name EXPORT_PARTITION_SNAPSHOT_FINAL achilles_ghrd_static.qdb -to | -entity achilles_ghrd
-#       set_instance_assignment -name EXPORT_PARTITION_SNAPSHOT_FINAL achilles_ghrd achilles_ghrd_static.qdb
       set_instance_assignment -name PLACE_REGION "X4 Y2 X23 Y21" -to i_blink_led
       set_instance_assignment -name RESERVE_PLACE_REGION ON -to i_blink_led
       set_instance_assignment -name CORE_ONLY_PLACE_REGION ON -to i_blink_led
@@ -107,7 +88,7 @@ proc create_quartus_project {project_name revision_name} {
    }
    
    # Programmer Assignments
-   
+
    set_global_assignment -name HPS_EARLY_IO_RELEASE ON
    
    # used to control HDL compilation based on SOM version & GHRD type
@@ -117,8 +98,6 @@ proc create_quartus_project {project_name revision_name} {
    # FPGA I/O standard and pin assignments
    source src/script/achilles_io_pinout.tcl
    
-#   set_global_assignment -name TOP_LEVEL_ENTITY achilles_ghrd
-     
    project_close
 }
 
@@ -129,12 +108,10 @@ proc create_pr_revision {revision_name base_revision} {
    project_open -revision $base_revision $quartus_project_name
    create_revision $revision_name -based_on $base_revision -new_rev_type impl -root_partition_qdb_file ${base_revision}_static.qdb
    set_current_revision $revision_name
-#   set_global_assignment -name REVISION_TYPE PR_IMPL
    set_global_assignment -name VHDL_FILE src/hdl/blink_led_default.vhd -remove
    set_global_assignment -name VHDL_FILE src/hdl/$revision_name.vhd
    set_instance_assignment -name ENTITY_REBINDING $revision_name -to i_blink_led -entity $base_revision
    
-#   set_instance_assignment -name QDB_FILE_PARTITION ${base_revision}_static.qdb -to | -entity $base_revision
    project_close
 }
 
@@ -153,7 +130,6 @@ proc create_qsys_project_script {} {
    puts $QSYS_FILE "# ************************************"
    puts $QSYS_FILE "set project_name $quartus_project_name"
    puts $QSYS_FILE "package require qsys"
-#   puts $QSYS_FILE "set_module_property NAME {achilles_$som_ver}"
    puts $QSYS_FILE "set_project_property DEVICE_FAMILY {$family}"
    puts $QSYS_FILE "set_project_property DEVICE $device"
    puts $QSYS_FILE "source src/script/achilles_hps_qsys.tcl"
@@ -162,7 +138,6 @@ proc create_qsys_project_script {} {
    puts $QSYS_FILE "set_domain_assignment {\$system} {qsys_mm.maxAdditionalLatency} {4}"
    puts $QSYS_FILE "set_domain_assignment {\$system} {qsys_mm.clockCrossingAdapter} {AUTO}"
    puts $QSYS_FILE "set_domain_assignment {\$system} {qsys_mm.burstAdapterImplementation} {PER_BURST_TYPE_CONVERTER}"
-#   puts $QSYS_FILE "save_system {achilles_${som_ver}_hps.qsys}"
    puts $QSYS_FILE "save_system {achilles_hps.qsys}"
    close $QSYS_FILE   
 }

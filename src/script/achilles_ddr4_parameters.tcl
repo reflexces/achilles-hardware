@@ -1,6 +1,9 @@
 # Achilles DDR4 memory parameters
-# som = turbo, indus, lite
-# host = hps, fpga
+# sourced from achilles_qsys_script_GENERATED.tcl
+# process set_ddr_params called from achilles_hps_qsys.tcl
+# expected process parameters:
+#   som = turbo, indus, lite
+#   host = hps, fpga
 
 proc set_ddr_params {som host} {
 
