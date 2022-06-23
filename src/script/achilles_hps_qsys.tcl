@@ -195,6 +195,7 @@ proc add_achilles_hps_qsys_components {som_ver ghrd_type} {
    # System ID
 
    add_instance system_id altera_avalon_sysid_qsys
+   set_instance_parameter_value system_id id {537113343}
    add_connection h2f_lw_clk.clk system_id.clk
    add_connection h2f_lw_clk.clk_reset system_id.reset
    add_connection jtag_master.master_reset system_id.reset
