@@ -226,6 +226,7 @@ proc add_achilles_hps_qsys_components {som_ver ghrd_type} {
    add_instance rs232_uart altera_up_avalon_rs232
    add_connection h2f_lw_clk.clk rs232_uart.clk
    add_connection h2f_lw_clk.clk_reset rs232_uart.reset
+   add_connection jtag_master.master_reset rs232_uart.reset
    add_connection jtag_master.master rs232_uart.avalon_rs232_slave
    add_connection hps.h2f_lw_axi_master rs232_uart.avalon_rs232_slave
    set_interface_property rs232_uart_interrupt EXPORT_OF rs232_uart.interrupt
