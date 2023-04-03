@@ -3,6 +3,7 @@
 
 set family "Arria 10"
 
+post_message "Achilles SOM revision = $som_rev"
 post_message "Achilles SOM version = $som_ver"
 post_message "Achilles GHRD Type = $ghrd_type"
 post_message "Quartus tool path = $quartus(quartus_rootpath)"
@@ -17,6 +18,7 @@ proc create_quartus_project {project_name revision_name} {
 
    global family
    global device
+   global som_rev
    global som_ver
    global ghrd_type
    
@@ -92,7 +94,8 @@ proc create_quartus_project {project_name revision_name} {
    set_global_assignment -name HPS_EARLY_IO_RELEASE ON
    
    # used to control HDL compilation based on SOM version & GHRD type
-   set_parameter -name som_type $som_ver
+   set_parameter -name som_rev $som_rev
+   set_parameter -name som_ver $som_ver
    set_parameter -name ghrd_type $ghrd_type
 
    # FPGA I/O standard and pin assignments
@@ -121,6 +124,7 @@ proc create_qsys_project_script {} {
    global quartus_project_name
    global family
    global device
+   global som_rev
    global som_ver
    global ghrd_type
    
@@ -134,7 +138,7 @@ proc create_qsys_project_script {} {
    puts $QSYS_FILE "set_project_property DEVICE $device"
    puts $QSYS_FILE "source src/script/achilles_hps_qsys.tcl"
    puts $QSYS_FILE "source src/script/achilles_ddr4_parameters.tcl"
-   puts $QSYS_FILE "add_achilles_hps_qsys_components $som_ver $ghrd_type"
+   puts $QSYS_FILE "add_achilles_hps_qsys_components $som_rev $som_ver $ghrd_type"
    puts $QSYS_FILE "set_domain_assignment {\$system} {qsys_mm.maxAdditionalLatency} {4}"
    puts $QSYS_FILE "set_domain_assignment {\$system} {qsys_mm.clockCrossingAdapter} {AUTO}"
    puts $QSYS_FILE "set_domain_assignment {\$system} {qsys_mm.burstAdapterImplementation} {PER_BURST_TYPE_CONVERTER}"

@@ -2,13 +2,14 @@
 # sourced from achilles_qsys_script_GENERATED.tcl
 # process set_ddr_params called from achilles_hps_qsys.tcl
 # expected process parameters:
+#   rev = v2, v5
 #   som = turbo, indus, lite
 #   host = hps, fpga
 
-proc set_ddr_params {som host} {
+proc set_ddr_params {rev som host} {
 
-   if {$som == "turbo"} {
-      # parameters for Turbo SOM with Micron MT40A1G16KNR-075:E
+   if {($rev == "v2") && ($som == "turbo")} {
+      # parameters for v2 Turbo SOM with Micron MT40A1G16KNR-075:E
       set_instance_parameter_value ${host}_ddr4_ctrl {BOARD_DDR4_AC_TO_CK_SKEW_NS} {-0.024}
       set_instance_parameter_value ${host}_ddr4_ctrl {BOARD_DDR4_BRD_SKEW_WITHIN_AC_NS} {0.029}
       set_instance_parameter_value ${host}_ddr4_ctrl {BOARD_DDR4_DQS_TO_CK_SKEW_NS} {-0.33}
@@ -61,9 +62,9 @@ proc set_ddr_params {som host} {
       set_instance_parameter_value ${host}_ddr4_ctrl {DIAG_DDR4_SKIP_CA_DESKEW} {1}
       set_instance_parameter_value ${host}_ddr4_ctrl {DIAG_DDR4_SKIP_CA_LEVEL} {1}
       set_instance_parameter_value ${host}_ddr4_ctrl {SHORT_QSYS_INTERFACE_NAMES} {0}
-}
-   if {$som == "indus"} {
-      # parameters for Indus SOM with Nanya NT5AD512M16C4-HRI
+   }
+   if {($rev == "v2") && ($som == "indus")} {
+      # parameters for v2 Indus SOM with Nanya NT5AD512M16C4-HRI
       set_instance_parameter_value ${host}_ddr4_ctrl {BOARD_DDR4_AC_TO_CK_SKEW_NS} {-0.024}
       set_instance_parameter_value ${host}_ddr4_ctrl {BOARD_DDR4_BRD_SKEW_WITHIN_AC_NS} {0.029}
       set_instance_parameter_value ${host}_ddr4_ctrl {BOARD_DDR4_DQS_TO_CK_SKEW_NS} {-0.33}
@@ -119,9 +120,9 @@ proc set_ddr_params {som host} {
       set_instance_parameter_value ${host}_ddr4_ctrl {DIAG_DDR4_SKIP_CA_DESKEW} {1}
       set_instance_parameter_value ${host}_ddr4_ctrl {DIAG_DDR4_SKIP_CA_LEVEL} {1}
       set_instance_parameter_value ${host}_ddr4_ctrl {SHORT_QSYS_INTERFACE_NAMES} {0}
-}
-   if {$som == "lite"} {
-      # parameters for Lite SOM with Nanya NT5AD512M16C4-HRI
+   }
+   if {($rev == "v2") && ($som == "lite")} {
+      # parameters for v2 Lite SOM with Nanya NT5AD512M16C4-HRI
       set_instance_parameter_value ${host}_ddr4_ctrl {BOARD_DDR4_AC_TO_CK_SKEW_NS} {0.0}
       set_instance_parameter_value ${host}_ddr4_ctrl {BOARD_DDR4_BRD_SKEW_WITHIN_AC_NS} {0.03}
       set_instance_parameter_value ${host}_ddr4_ctrl {BOARD_DDR4_DQS_TO_CK_SKEW_NS} {0.5}
@@ -179,4 +180,10 @@ proc set_ddr_params {som host} {
       set_instance_parameter_value ${host}_ddr4_ctrl {DIAG_DDR4_SKIP_CA_LEVEL} {1}
       set_instance_parameter_value ${host}_ddr4_ctrl {SHORT_QSYS_INTERFACE_NAMES} {0}
    }   
+   if {($rev == "v5") && ($som == "indus")} {
+        error [concat "HPS DDR4 is not supported for achilles-" $rev "-" $som " !"]
+   }
+   if {($rev == "v5") && ($som == "lite")} {
+        error [concat "HPS DDR4 is not supported for achilles-" $rev "-" $som " !"]
+   }
 }

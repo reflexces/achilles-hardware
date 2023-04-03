@@ -2,10 +2,11 @@
 # sourced from achilles_qsys_script_GENERATED.tcl
 # process add_achilles_hps_qsys_components called from achilles_qsys_script_GENERATED.tcl
 # expected process parameters:
+#   som_rev = v2, v5
 #   som_ver = turbo, indus, lite
 #   ghrd_type = pr, std
 
-proc add_achilles_hps_qsys_components {som_ver ghrd_type} {
+proc add_achilles_hps_qsys_components {som_rev som_ver ghrd_type} {
 
    # system clock and reset
 
@@ -168,7 +169,7 @@ proc add_achilles_hps_qsys_components {som_ver ghrd_type} {
 
    # DDR timing parameters come from set_ddr_params proc in achilles_ddr4_parameters.tcl
 
-   set_ddr_params $som_ver hps
+   set_ddr_params $som_rev $som_ver hps
 
    # JTAG master
 

@@ -29,15 +29,17 @@
 # To run this script at the command prompt, use:
 # quartus_sh -t src/script/achilles_ghrd_build_flow.tcl som_ver ghrd_type
 # where valid som_ver = lite, indus, turbo
+# and valid som_rev = v2, v5
 # and valid ghrd_type = standard, pr
 # Release info:
 #
 # 2022.06
 #   - initial release for GSRD 2022.06 supporting Achilles SOMs
 
-set som_ver [lindex $argv 0]
-set ghrd_type [lindex $argv 1]
-set quartus_project_name achilles_${som_ver}_ghrd
+set som_rev [lindex $argv 0]
+set som_ver [lindex $argv 1]
+set ghrd_type [lindex $argv 2]
+set quartus_project_name achilles_${som_rev}_${som_ver}_ghrd
 set revision_name "none"
 
 post_message "--------------------------------------------------------------------------------"
@@ -99,4 +101,4 @@ post_message "Generating periphery and core RBF programming files ..."
 post_message "--------------------------------------------------------------------------------"
 
 exec -ignorestderr $quartus(binpath)/quartus_cpf --convert --hps -o \
-   bitstream_compression=on output_files/achilles_ghrd.sof output_files/achilles_${som_ver}_ghrd.rbf
+   bitstream_compression=on output_files/achilles_ghrd.sof output_files/achilles_${som_rev}_${som_ver}_ghrd.rbf
