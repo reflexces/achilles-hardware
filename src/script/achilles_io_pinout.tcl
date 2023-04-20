@@ -730,6 +730,7 @@ set_location_assignment PIN_AK22 -to hps_ddr4_dq[10]            ; # BANK 2J : 1.
 # set_location_assignment PIN_A24 -to                       ; # BANK 2K : 1.2V
 # set_location_assignment PIN_A23 -to                       ; # BANK 2K : 1.2V
 # Group DQ5
+set_location_assignment PIN_M24 -to hps_ddr4_bg[1]              ; # BANK 2K : 1.2V
 set_location_assignment PIN_C25 -to hps_ddr4_bg[0]              ; # BANK 2K : 1.2V
 set_location_assignment PIN_D25 -to hps_ddr4_ba[1]              ; # BANK 2K : 1.2V
 set_location_assignment PIN_D26 -to hps_ddr4_ba[0]              ; # BANK 2K : 1.2V
@@ -767,9 +768,7 @@ set_location_assignment PIN_K25 -to hps_ddr4_odt[0]             ; # BANK 2K : 1.
 set_location_assignment PIN_J24 -to hps_ddr4_act_n[0]           ; # BANK 2K : 1.2V
 set_location_assignment PIN_K24 -to hps_ddr4_cs_n[0]            ; # BANK 2K : 1.2V
 set_location_assignment PIN_L24 -to hps_ddr4_reset_n[0]         ; # BANK 2K : 1.2V
-if {$som_ver == "turbo"} {
-set_location_assignment PIN_M24 -to hps_ddr4_bg[1]              ; # BANK 2K : 1.2V
-}
+
 # set_instance_assignment -name IO_STANDARD "1.2V" -to fmc_std_clk_dir
 # set_instance_assignment -name IO_STANDARD "1.2V" -to hps_good
 set_instance_assignment -name IO_STANDARD "1.2V" -to hps_rst
@@ -976,6 +975,7 @@ set_location_assignment PIN_AM8 -to ddr4_dq[14]                 ; # BANK 3B : 1.
 set_location_assignment PIN_AM7 -to ddr4_dq[15]                 ; # BANK 3B : 1.2V
 set_location_assignment PIN_AN5 -to ddr4_dbi_n[1]               ; # BANK 3B : 1.2V
 # Group DQ 57
+set_location_assignment PIN_AL1 -to ddr4_bg[1]                  ; # BANK 3B : 1.2V
 set_location_assignment PIN_AC7 -to ddr4_bg[0]                  ; # BANK 3B : 1.2V
 set_location_assignment PIN_AD7 -to ddr4_ba[1]                  ; # BANK 3B : 1.2V
 set_location_assignment PIN_AD6 -to ddr4_ba[0]                  ; # BANK 3B : 1.2V
@@ -1011,9 +1011,6 @@ set_location_assignment PIN_AK4 -to ddr4_odt[0]                 ; # BANK 3B : 1.
 set_location_assignment PIN_AJ2 -to ddr4_act_n[0]               ; # BANK 3B : 1.2V
 set_location_assignment PIN_AK2 -to ddr4_cs_n[0]                ; # BANK 3B : 1.2V
 set_location_assignment PIN_AK1 -to ddr4_reset_n[0]             ; # BANK 3B : 1.2V
-if {$som_ver == "turbo"} {
-set_location_assignment PIN_AL1 -to ddr4_bg[1]                  ; # BANK 3B : 1.2V
-}
 
 set_instance_assignment -name IO_STANDARD LVDS -to "fmc_std_clk1_m2c(n)"
 set_instance_assignment -name IO_STANDARD LVDS -to fmc_std_clk1_m2c
